@@ -26,7 +26,46 @@ This commands includes
 • Other IP Commands e.g. show ip route etc.
 <BR>
 
+## Program
+## Client
+```
+import socket 
+from pythonping import ping 
+s=socket.socket() 
+s.bind(('localhost',8000)) 
+s.listen(5) 
+c,addr=s.accept() 
+while True: 
+    hostname=c.recv(1024).decode() 
+    try: 
+        c.send(str(ping(hostname, verbose=False)).encode()) 
+    except KeyError: 
+        c.send("Not Found".encode())
+```
+## Server
+```
+import socket 
+s=socket.socket() 
+s.connect(('localhost',8000)) 
+while True: 
+    ip=input("Enter the website you want to ping ") 
+    s.send(ip.encode()) 
+    print(s.recv(1024).decode())
+  ```
+## Tranceroute command
+```
+from scapy.all import* 
+target = ["www.google.com"] 
+result, unans = traceroute(target,maxttl=32) 
+print(result,unans)
+```
 ## Output
+## Client
+![image](https://github.com/user-attachments/assets/d1abd5d9-1a01-4db7-950e-502c045c9188)
+## Server
+![image](https://github.com/user-attachments/assets/5f3db2bb-8b2f-4a38-a999-5391bc4364a1)
+## Tranceroute command
+![image](https://github.com/user-attachments/assets/b79a9afb-1e34-4c0a-a3c8-4253631f9120)
 
 ## Result
 Thus Execution of Network commands Performed 
